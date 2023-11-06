@@ -1,0 +1,50 @@
+.model small
+.stack 100h
+
+.data
+numbers db 9, 8, 2, 10, 4, 1, 3, 5
+count equ 8
+
+.code
+
+start:
+    mov ax, @data
+    mov ds, ax
+
+    lea si, numbers
+
+    mov cx, count
+outer_loop:
+    lea di, [si+1]
+
+    mov al, [di]
+    mov bx, si
+
+inner_loop:
+    cmp [bx], al
+    jbe no_insert
+
+    mov dl, [bx]
+    mov [bx+1], dl
+
+    dec bx
+    jnz inner_loop
+
+no_insert:
+    mov [bx+1], al
+
+    inc si
+    loop outer_loop
+
+    ; Move the sorted array to memory address 0002
+    lea si, numbers
+    mov di, 0000h
+    mov cx, count
+    rep movsb
+
+    ; Display the sorted array (if needed)
+
+    mov ah, 4Ch
+    int 21h
+
+end start

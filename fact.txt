@@ -1,0 +1,25 @@
+.model small
+.stack 100h
+
+.data 
+n dw 5
+
+.code 
+
+start:
+
+mov ax,@data
+mov ds,ax
+
+mov ax,n
+mov cx,ax
+dec cx
+
+fact:
+  mul cx
+  loop fact
+
+mov ax,4c00h
+int 20h
+
+end start

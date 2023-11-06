@@ -1,0 +1,26 @@
+.model small
+.stack 100h
+
+.data 
+
+a dw 4896h
+b dw 4898h
+sum dw ?
+carry dw 00h
+
+.code 
+start:
+mov ax,@data
+mov ds,ax
+
+mov ax,a
+mov bx,b
+add ax,bx
+
+jnc skip
+inc carry
+skip:
+mov ax,4c00h
+int 21h
+
+end start
